@@ -27,17 +27,21 @@ export class Home {
     this.decodedJwt = this.jwt && window.jwt_decode(this.jwt);
   }
 
+  searchCountry(cca3){
+	  this._callApi('Anonymous', 'http://localhost:8020/api/search-countries/'+cca3);
+  }
+  
   logout() {
     localStorage.removeItem('jwt');
     this.router.parent.navigateByUrl('/login');
   }
 
   callAnonymousApi() {
-    this._callApi('Anonymous', 'http://localhost:3001/api/random-quote');
+    this._callApi('Anonymous', 'http://localhost:8020/api/random-quote');
   }
 
   callSecuredApi() {
-    this._callApi('Secured', 'http://localhost:3001/api/protected/random-quote');
+    this._callApi('Secured', 'http://localhost:8020/api/protected/random-quote');
   }
 
   _callApi(type, url) {

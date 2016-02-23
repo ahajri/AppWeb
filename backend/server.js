@@ -4,6 +4,8 @@ var logger          = require('morgan'),
     express         = require('express'),
     errorhandler    = require('errorhandler'),
     dotenv          = require('dotenv'),
+    cluster 		= require('cluster'),
+    fs				= require('fs'),
     bodyParser      = require('body-parser');
 
 var app = express();
@@ -35,9 +37,17 @@ app.use(require('./anonymous-routes'));
 app.use(require('./protected-routes'));
 app.use(require('./user-routes'));
 
-var port = process.env.PORT || 3001;
+var port = process.env.PORT || 8020;
 
-http.createServer(app).listen(port, function (err) {
-  console.log('listening in http://localhost:' + port);
+var server = app.listen(port, function (err) {
+	if (cluster.isMaster) {
+		console.log('Master process ...');
+	}
+	if (cluster.isWorker) {
+		console.log('Worker process ...');
+	}
+	var cpuCount = require('os').cpus().length;
+	console.log('CPU nodes = ' + cpuCount);
+	console.log('listening in http://localhost:' + port);
 });
 
