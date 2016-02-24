@@ -1,35 +1,56 @@
 <div>
-	<img alt="A. HAJRI Tech. Challenge" src="src/images/logo.jpg"
-		style="float: left;" /> <img alt="MarkLogic"
-		src="src/images/marklogic.png"
-		style="padding-right: 20px; float: right;" />
-	<div class="home jumbotron centered">
-		<br /> <br /> <br />
-		<div id="searchbox" align="left">
 
-			<input id="search" #search type="text"
-				placeholder="Enter country name" /> <input id="submit"
-				type="submit" value="Go" (click)="searchCountry(search.value)" />
+	<div id="wrapper">
+		<div id="headerwrap">
+			<div id="header">
+				<img alt="Logout" src="src/images/logout.png"
+					style="float: left; cursor: pointer;" title="logout"
+					(click)="logout()" /> <img alt="MarkLogic"
+					src="src/images/marklogic.png"
+					style="padding-right: 20px; float: right;" />
+			</div>
 
 		</div>
-		<p>Call an API and get a response</p>
-		<p>
-			<a class="btn btn-primary btn-lg" role="button"
-				(click)="callAnonymousApi()">Call Anonymous API</a>
-		</p>
-		<p>
-			<a class="btn btn-primary btn-lg" role="button"
-				(click)="callSecuredApi()">Call Secure API</a>
-		</p>
+		<div id="navigationwrap">
+			<div id="navigation">
 
-		<h2 *ngIf="response">
-			The response of calling the <span class="red">{{api}}</span> API is:
-		</h2>
-		<h3 *ngIf="response">{{response}}</h3>
+				<input id="search" #search type="text"
+					placeholder="Enter country name" /> <input id="submit"
+					type="submit" value="Go" (click)="searchCountry(search.value)" />
+			</div>
+
+
+		</div>
+		<div id="leftcolumnwrap">
+			<div id="leftcolumn">
+				<p>
+					<a role="button" (click)="callAnonymousApi()">Call Anonymous
+						API</a>
+				</p>
+				<p>
+					<a role="button" (click)="callSecuredApi()">Call Secure API</a>
+				</p>
+			</div>
+		</div>
+		<div id="contentwrap">
+			<div id="content">
+				<h2 *ngIf="response">
+					The response of calling the <span class="red">{{api}}</span> API
+					is:
+				</h2>
+				<h3 *ngIf="response">{{response}}</h3>
+			</div>
+			<div id="content">
+				<p>#chart.</p>
+			</div>
+		</div>
+		<div id="footerwrap">
+			<div id="footer" align="center">
+				<label>Technial Challenge of Anis HAJRI</label>
+
+			</div>
+		</div>
 	</div>
-	<div>
-		<p>
-			<a class="btn btn-primary btn-lg" role="button" (click)="logout()">Logout</a>
-		</p>
-	</div>
+
+
 </div>
