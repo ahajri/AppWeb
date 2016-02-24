@@ -1,5 +1,6 @@
-var express = require('express'), 
-countries = require('./countries');
+var express = require('express');
+var personService = require('./service/personService.js'); 
+var countries = require('./countries');
 
 var app = module.exports = express.Router();
 
@@ -16,10 +17,10 @@ app.get('/api/random-quote', supportCrossOriginScript, function(req, res) {
 	res.status(200).send(countries.getRandomOne());
 });
 
-app.get('/api/search-countries/:cca3', supportCrossOriginScript, function(req, res) {
-
-	console.log(req.params.cca3);
-	
+app.get('/api/search-countries/:cca3', supportCrossOriginScript, function(req,res) {
 	res.status(200).send(countries.getByCca3(req.params.cca3));
+});
 
+app.get('/api/find-profile', supportCrossOriginScript, function(req, res) {
+	res.status(200).send(JSON.stringify(personService.getRandomOne()));
 });

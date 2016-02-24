@@ -25,7 +25,7 @@ p {
 
 #header {
     height: 75px;
-    background: #39c6a6;
+    background: #CEF6F5;
     border-radius: 10px;
     border: 1px solid #eb521f;
     margin: 5px;
@@ -39,9 +39,9 @@ p {
 
 #navigation {
     height: 35px;
-    background: #39c6a6;
+    background: #CEF6F5;
     border-radius: 10px;
-    border: 1px solid #ebb81f;
+    border: 1px solid #eb521f;
     margin: 5px;
 }
 
@@ -54,7 +54,7 @@ p {
 #content {
     background: #FFFFFF;
     border-radius: 10px;
-    border: 1px solid #ebebeb;
+    border: 1px solid #eb521f;
     margin: 5px;
 }
 
@@ -66,9 +66,9 @@ p {
 
 #leftcolumn {
 	height: 500px;
-    background: #39c6a6;
+    background: #CEF6F5;
     border-radius: 10px;
-    border: 1px solid #1fb8eb;
+    border: 1px solid #eb521f;
     margin: 5px;
 }
 
@@ -81,9 +81,9 @@ p {
 
 #footer {
     height: 40px;
-    background: #39c6a6;
+    background: #CEF6F5;
     border-radius: 10px;
-    border: 1px solid #1feb52;
+    border: 1px solid #eb521f;
     margin: 5px;
 }
 

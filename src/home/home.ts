@@ -1,28 +1,12 @@
-import { Component, View } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
-import { Http, Headers } from 'angular2/http';
-import { AuthHttp } from 'angular2-jwt';
-import { Router } from 'angular2/router';
+import{Component,View}from'angular2/core';import{CORE_DIRECTIVES}from'angular2/common';import{Http,Headers}from'angular2/http';import{AuthHttp}from'angular2-jwt';import{Router}from'angular2/router';
 
-let styles = require('./home.css');
-let template = require('./home.html');
+let styles=require('./home.css');let template=require('./home.html');
 
+@Component
+({selector:'home'})@View({directives:[CORE_DIRECTIVES],template:template,styles:[styles]})export class Home {
+	jwt:string;decodedJwt:string;response:string;api:string;
 
-@Component({
-  selector: 'home'
-})
-@View({
-  directives: [CORE_DIRECTIVES],
-  template: template,
-  styles: [styles]
-})
-export class Home {
-  jwt: string;
-  decodedJwt: string;
-  response: string;
-  api: string;
-
-  constructor(public router: Router, public http: Http, public authHttp: AuthHttp) {
+	constructor(public router: Router, public http: Http, public authHttp: AuthHttp) {
     this.jwt = localStorage.getItem('jwt');
     this.decodedJwt = this.jwt && window.jwt_decode(this.jwt);
   }
@@ -30,21 +14,24 @@ export class Home {
   searchCountry(cca3){
 	  this._callApi('Anonymous', 'http://localhost:8020/api/search-countries/'+cca3);
   }
-  
+
   logout() {
     localStorage.removeItem('jwt');
     this.router.parent.navigateByUrl('/login');
   }
 
-  callAnonymousApi() {
+	callAnonymousApi() {
     this._callApi('Anonymous', 'http://localhost:8020/api/random-quote');
   }
 
-  callSecuredApi() {
+	callSecuredApi() {
     this._callApi('Secured', 'http://localhost:8020/api/protected/random-quote');
   }
+	manageProfile(){
+		this._callApi('Anonymous', 'http://localhost:8020/api/manage-profile');
+	}
 
-  _callApi(type, url) {
+	_callApi(type, url) {
     this.response = null;
     if (type === 'Anonymous') {
       // For non-protected routes, just use Http

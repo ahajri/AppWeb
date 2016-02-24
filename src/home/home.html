@@ -15,6 +15,7 @@
 			<div id="navigation">
 
 				<input id="search" #search type="text"
+					style="padding-left: 100px; padding-top: 5px"
 					placeholder="Enter country name" /> <input id="submit"
 					type="submit" value="Go" (click)="searchCountry(search.value)" />
 			</div>
@@ -23,21 +24,28 @@
 		</div>
 		<div id="leftcolumnwrap">
 			<div id="leftcolumn">
-				<p>
-					<a role="button" (click)="callAnonymousApi()">Call Anonymous
-						API</a>
+			<p>
+					<a role="button" (click)="manageProfile()">Profile </a>
 				</p>
 				<p>
-					<a role="button" (click)="callSecuredApi()">Call Secure API</a>
+					<a role="button" (click)="callAnonymousApi()">Education </a>
+				</p>
+				<p>
+					<a role="button" (click)="callSecuredApi()">GDA</a>
+				</p>
+				<p>
+					<a role="button" (click)="callSecuredApi()">Poverty</a>
+				</p>
+				<p>
+					<a role="button" (click)="callSecuredApi()">CO2 Consumbtion</a>
+				</p>
+				<p>
+					<a role="button" (click)="callSecuredApi()">Economy Growth</a>
 				</p>
 			</div>
 		</div>
 		<div id="contentwrap">
 			<div id="content">
-				<h2 *ngIf="response">
-					The response of calling the <span class="red">{{api}}</span> API
-					is:
-				</h2>
 				<h3 *ngIf="response">{{response}}</h3>
 			</div>
 			<div id="content">
