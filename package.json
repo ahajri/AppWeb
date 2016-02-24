@@ -1,7 +1,7 @@
 {
-  "name": "angular2-authentication-sample",
+  "name": "AppWeb",
   "version": "0.0.1",
-  "description": "This is a sample that shows how to add authentication to an Angular 2 (ng2) app",
+  "description": "Angular 2 (ng2) + NodeJS + MarkLogic app",
   "main": "",
   "scripts": {
     "server": "cd backend && npm i && node server.js",
@@ -11,18 +11,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/auth0/angular2-authentication-sample.git"
+    "url": "https://github.com/ahajri/AppWeb.git"
   },
   "contributors": [
-    "Martin Gontovnikas (http://gon.to) <martin@gon.to>",
-    "PatrickJS <github@gdi2290.com>",
-    "Ryan Chenkie <ryanchenkie@gmail.com>"
+    "Anis HAJRI <anis.hajri@gmail.com>"
   ],
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/auth0/angular2-authentication-sample/issues"
-  },
-  "homepage": "https://github.com/auth0/angular2-authentication-sample",
+  "homepage": "https://github.com/ahajri/AppWeb",
   "dependencies": {
     "angular2": "2.0.0-beta.0",
     "angular2-jwt": "0.1.4",
