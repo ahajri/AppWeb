@@ -5,6 +5,11 @@ import{AuthHttp}from'angular2-jwt';
 import{Router}from'angular2/router';
 import {CHART_DIRECTIVES} from 'ng2-charts/ng2-charts';
 import {CountrySelector} from './country-selector';
+import {CountryDetail} from '../common/country/country-detail';
+import {CountryService} from '../service/CountryService';
+
+
+
 
 let styles=require('./home.css');
 let template=require('./home.html');
@@ -14,7 +19,7 @@ let countries = require('../../backend/countries.json');
 	selector:'home'
 })
 @View({
-	directives:[CORE_DIRECTIVES,CountrySelector],
+	directives:[CORE_DIRECTIVES,CountrySelector,CountryDetail],
 	template:template,
 	styles:[styles]
 })
@@ -26,11 +31,11 @@ export class Home {
 	countryList:Array<any>;
 
 
-	constructor(public router: Router, public http: Http, public authHttp: AuthHttp) {
+	constructor(public countryService:CountryService,public router: Router, public http: Http, public authHttp: AuthHttp) {
     this.jwt = localStorage.getItem('jwt');
     this.decodedJwt = this.jwt && window.jwt_decode(this.jwt);
     this.countryList = countries;
-    alert(countries.length);
+   
 //    this.bbb = JSON.stringify(countries);
 //    alert(countries[0].cca3);
     

@@ -1,0 +1,38 @@
+<div>
+	<table id="example" class="display" cellspacing="0" width="100%">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Currency</th>
+				<th>Region</th>
+				<th>Sub-Region</th>
+				<th>Area</th>
+				<th>Currency</th>
+				<th>Economy Details</th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<th>Name</th>
+				<th>Currency</th>
+				<th>Region</th>
+				<th>Sub-Region</th>
+				<th>Area</th>
+				<th>Currency</th>
+				<th>Economy Details</th>
+			</tr>
+		</tfoot>
+		<tbody>
+			<tr *ngFor="#country of countries">
+				<td>{{country.name.common}}</td>
+				<td>{{country.region}}</td>
+				<td>{{country.subregion}}</td>
+				<td>{{country.area}}</td>
+				<td>{{country.currency[0]}}</td>
+				<td><img src="src/images/stat.png" /></td>
+			</tr>
+
+		</tbody>
+	</table>
+	
+</div>
