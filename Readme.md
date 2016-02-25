@@ -1,4 +1,4 @@
-# Angular 2: Authentication sample.
+# MarkLogic, AngularJS, NodeJS Sample.
 
 This sample shows how to create an angular 2 app that:
 * Has **lots of different routes**
@@ -17,7 +17,6 @@ Use `npm run server` to run API server.
 
 ## Issue Reporting
 
-If you have found a bug or if you have a feature request, please report them at this repository issues section. Please do not report security vulnerabilities on the public GitHub issue tracker. The [Responsible Disclosure Program](https://auth0.com/whitehat) details the procedure for disclosing security issues.
 
 ## Author
 

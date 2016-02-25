@@ -13,7 +13,6 @@
 		</div>
 		<div id="navigationwrap">
 			<div id="navigation">
-
 				<input id="search" #search type="text"
 					style="padding-left: 100px; padding-top: 5px"
 					placeholder="Enter country name" /> <input id="submit"
@@ -24,7 +23,7 @@
 		</div>
 		<div id="leftcolumnwrap">
 			<div id="leftcolumn">
-			<p>
+				<p>
 					<a role="button" (click)="manageProfile()">Profile </a>
 				</p>
 				<p>
@@ -45,20 +44,47 @@
 			</div>
 		</div>
 		<div id="contentwrap">
+
+			<div class="form-group" style="width: 200px;">
+				<label>Countries</label> <select class="form-control">
+					<option *ngFor="#country of countryList" [value]="country.cca3">
+						<country-selector [country]="country"></country-selector>
+					</option>
+				</select>
+			</div>
+
+
 			<div id="content">
 				<h3 *ngIf="response">{{response}}</h3>
 			</div>
 			<div id="content">
-				<p>#chart.</p>
+				<div class="row">
+					<div class="col-md-6">
+						<base-chart class="chart" [data]="lineChartData"
+							[labels]="lineChartLabels" [options]="lineChartOptions"
+							[series]="lineChartSeries" [colours]="lineChartColours"
+							[legend]="lineChartLegend" [chartType]="lineChartType"
+							(chartHover)="chartHovered($event)"
+							(chartClick)="chartClicked($event)"></base-chart>
+					</div>
+					<div class="col-md-6" style="margin-bottom: 10px;">
+						<table class="table table-responsive table-condensed">
+							<tr>
+								<th *ngFor="#label of lineChartLabels"></th>
+							</tr>
+							<tr *ngFor="#d of lineChartData">
+								<td *ngFor="#label of lineChartLabels; #j=index"></td>
+							</tr>
+						</table>
+						<button (click)="randomize()">CLICK</button>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div id="footerwrap">
 			<div id="footer" align="center">
 				<label>Technial Challenge of Anis HAJRI</label>
-
 			</div>
 		</div>
 	</div>
-
-
 </div>

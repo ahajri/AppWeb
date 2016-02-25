@@ -1,14 +1,50 @@
-import{Component,View}from'angular2/core';import{CORE_DIRECTIVES}from'angular2/common';import{Http,Headers}from'angular2/http';import{AuthHttp}from'angular2-jwt';import{Router}from'angular2/router';
+import{Component,View,Input}from'angular2/core';
+import{CORE_DIRECTIVES}from'angular2/common';
+import{Http,Headers}from'angular2/http';
+import{AuthHttp}from'angular2-jwt';
+import{Router}from'angular2/router';
+import {CHART_DIRECTIVES} from 'ng2-charts/ng2-charts';
+import {CountrySelector} from './country-selector';
 
-let styles=require('./home.css');let template=require('./home.html');
+let styles=require('./home.css');
+let template=require('./home.html');
+let countries = require('../../backend/countries.json');
 
-@Component
-({selector:'home'})@View({directives:[CORE_DIRECTIVES],template:template,styles:[styles]})export class Home {
-	jwt:string;decodedJwt:string;response:string;api:string;
+@Component({
+	selector:'home'
+})
+@View({
+	directives:[CORE_DIRECTIVES,CountrySelector],
+	template:template,
+	styles:[styles]
+})
+export class Home {
+	jwt:string;
+	decodedJwt:string;
+	response:string;
+	api:string;
+	countryList:Array<any>;
+
 
 	constructor(public router: Router, public http: Http, public authHttp: AuthHttp) {
     this.jwt = localStorage.getItem('jwt');
     this.decodedJwt = this.jwt && window.jwt_decode(this.jwt);
+    this.countryList = countries;
+    alert(countries.length);
+//    this.bbb = JSON.stringify(countries);
+//    alert(countries[0].cca3);
+    
+//    this.http.get('http://localhost:8020/api/countries')
+//    .subscribe(
+//      response => {
+//        localStorage.setItem('bbb', response.json());
+//        this.router.parent.navigateByUrl('/home');
+//      },
+//      error => {
+//        alert(error.text());
+//        console.log(error.text());
+//      }
+//    );
   }
 
   searchCountry(cca3){
@@ -50,4 +86,5 @@ let styles=require('./home.css');let template=require('./home.html');
         );
     }
   }
+	
 }

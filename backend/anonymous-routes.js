@@ -24,3 +24,7 @@ app.get('/api/search-countries/:cca3', supportCrossOriginScript, function(req,re
 app.get('/api/find-profile', supportCrossOriginScript, function(req, res) {
 	res.status(200).send(JSON.stringify(personService.getRandomOne()));
 });
+app.get('/api/countries',supportCrossOriginScript,function(req,res){
+	console.log("#Call Countries#");
+	res.status(200).send(countries.getAllCountries());
+});
