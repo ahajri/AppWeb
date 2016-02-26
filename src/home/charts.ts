@@ -15,7 +15,6 @@ declare var Chart:any;
 export class Charts {
   constructor(element:ElementRef) {
   }
-
 }
 
 @Component({
