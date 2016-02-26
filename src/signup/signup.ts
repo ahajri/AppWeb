@@ -22,7 +22,7 @@ export class Signup {
   signup(event, username, password) {
     event.preventDefault();
     let body = JSON.stringify({ username, password });
-    this.http.post('http://localhost:8020/users', body, { headers: contentHeaders })
+    this.http.post('http://localhost:8020/users/create', body, { headers: contentHeaders })
       .subscribe(
         response => {
           localStorage.setItem('jwt', response.json().id_token);

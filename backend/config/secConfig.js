@@ -1,5 +1,5 @@
 var security = {
-	database : "Security",
+	database : "InvestDB",
 	host : "localhost",
 	port : 8000,
 	user : "ahajri",

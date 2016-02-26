@@ -1,0 +1,150 @@
+<export><workspace name="ahajriWorkspace"><query name="Query 1" focus="false" active="true" content-source="as:200067409934664761:" mode="xquery">(:  __________________________________________________________
+ ::  (Q1.1)
+ ::  List countries by area
+ :: __________________________________________________________
+  :)
+&lt;countries&gt;
+ {
+   for $b in doc("/import/countries.xml")//countries/country
+  where  $b/area &gt;5 and $b/currency/country="EUR"
+  return
+    &lt;country name="{ $b/name/common }"&gt;
+      { $b/translations }
+    &lt;/country&gt;
+ }
+&lt;/countries&gt;
+
+</query><query name="Query 2" focus="false" active="true" content-source="as:13424174276106756656:" mode="xquery">(:  __________________________________________________________
+ ::  (Q1.1)
+ ::  determine document collections
+ :: __________________________________________________________
+  :)
+ 
+ 
+xdmp:document-get-collections("/triplestore/9988707b26164728.xml")
+</query><query name="Query 3" focus="false" active="true" content-source="as:200067409934664761:" mode="xquery">(:  __________________________________________________________
+ ::  (Q1.1)
+ ::  List Countries by Language
+ :: __________________________________________________________
+  :)
+&lt;countries&gt;
+ {
+  for $b in doc("/import/countries.xml")/countries/country
+    where $b/currency/country = "EUR"
+  return
+    &lt;country&gt;
+     { $b/name/common }
+    &lt;/country&gt;
+ }
+&lt;/countries&gt;</query><query name="Query 4: list document in folder" focus="false" active="true" content-source="as:18377008459498027332:" mode="xquery">(:  __________________________________________________________
+ ::  (Q1.1)
+ ::  List documents in directory
+ :: __________________________________________________________
+  :)
+
+for $x in xdmp:directory("/auth/", "1")
+return
+fn:document-uri($x)</query><query name="Query 5" focus="false" active="true" content-source="as:18377008459498027332:" mode="xquery">xquery version "1.0-ml";
+declare namespace html = "http://www.w3.org/1999/xhtml";
+(:  __________________________________________________________
+ ::  (Q1.1)
+ ::  delete document
+ :: __________________________________________________________
+  :)
+
+
+xdmp:document-delete("//import/co2_emission_countries.xml");
+
+xdmp:document-delete("//import/gdp_countries.xml");
+xdmp:document-delete("//import/countries.xml");
+
+xdmp:document-delete("//import/electric_consumption_power.xml");
+</query><query name="Query 6" focus="false" active="true" content-source="as:18377008459498027332:" mode="xquery">xquery version "1.0-ml";
+declare namespace html = "http://www.w3.org/1999/xhtml";
+(:  __________________________________________________________
+ ::  (Q1.4)
+ ::  For each currency list all countries's name
+ :: __________________________________________________________
+  :)
+
+
+
+ for $d in xdmp:directory("/auth/","1")
+return xdmp:node-uri($d)
+       
+</query><query name="Query 7" focus="false" active="true" content-source="as:200067409934664761:" mode="xquery">xquery version "1.0-ml";
+declare namespace html = "http://www.w3.org/1999/xhtml";
+
+(: Substitute in the URI of the document you want to test :)
+let $x:= doc("/import/co2_emission_countries.xml")/node()
+return
+typeswitch ( $x )
+ case element() return "xml element node"
+ case text() return "text node"
+ case binary() return "binary node"
+default return "don't know"</query><query name="Query 8: load document" focus="true" active="true" content-source="as:18377008459498027332:" mode="xquery">xquery version "1.0-ml";
+declare namespace html = "http://www.w3.org/1999/xhtml";
+import module namespace sec="http://marklogic.com/xdmp/security" at 
+     "/MarkLogic/security.xqy";
+     
+     
+(: Load document in database :)
+xdmp:document-load("C:\Users\ahajri\git\AppWeb\backend\mock\persons.json", 
+          &lt;options xmlns="xdmp:document-load"&gt;
+            &lt;uri&gt;/auth/users.json&lt;/uri&gt; 
+            &lt;permissions&gt;{xdmp:default-permissions()}&lt;/permissions&gt; 
+            &lt;collections&gt;
+              &lt;collection&gt;AuthCollection&lt;/collection&gt;
+            &lt;/collections&gt; 
+            &lt;format&gt;json&lt;/format&gt;
+          &lt;/options&gt;)</query><query name="Query 9" focus="false" active="false" content-source="14607400573595602319:0:Apps" mode="xquery">
+try 
+{
+   xdmp:security-assert("application-privilege","execute")
+}
+catch($e)
+{
+  xdmp:redirect-response("login.xqy")
+}</query><query name="Query 10:check user exists" focus="false" active="true" content-source="as:18377008459498027332:" mode="xquery">xquery version "1.0-ml"; 
+
+import module namespace sec = "http://marklogic.com/xdmp/security" 
+      at "/MarkLogic/security.xqy";
+
+sec:user-exists("invest")</query><query name="Query 11" focus="false" active="true" content-source="as:14849302634486639994:" mode="xquery">(:Transform XML to JSON:)
+  xquery version "1.0-ml";
+  import module namespace json="http://marklogic.com/xdmp/json"
+     at "/MarkLogic/json/json.xqy";
+     
+  let $config := json:config("full") ,
+    $cx := map:put( $config, "whitespace"     , "ignore" )
+return  
+  json:transform-to-json( fn:doc("/input/countries.xml") ,$config)
+</query><query name="Query 12: delete directory" focus="false" active="true" content-source="as:18377008459498027332:" mode="xquery">(:delete directory:)
+xdmp:directory-delete("/auth/")
+</query><query name="Query 13: set permissions to collection" focus="false" active="true" content-source="as:18377008459498027332:" mode="xquery">(: execute this against the security database :)
+xquery version "1.0-ml";
+import module namespace sec="http://marklogic.com/xdmp/security" at 
+     "/MarkLogic/security.xqy";
+(:set permissions :)
+sec:collection-set-permissions("AuthCollection",
+                               (xdmp:permission("rest-admin", "execute"), 
+                                xdmp:permission("rest-reader", "read")))
+                                
+(:get permissions :)
+ sec:collection-get-permissions("AuthCollection")</query><query name="Query 12: permission by collection" focus="false" active="false" content-source="as:18377008459498027332:" mode="xquery">(: execute this against the security database :)
+(:default collection of collections:)
+xquery version "1.0-ml";
+import module namespace sec="http://marklogic.com/xdmp/security" at 
+    "/MarkLogic/security.xqy";
+ 
+(:sec:collections-collection( );:)
+sec:collection-get-permissions("AuthCollection");
+</query><query name="Query 13: list collections" focus="false" active="true" content-source="as:18377008459498027332:" mode="xquery">xquery version "1.0-ml";
+declare namespace html = "http://www.w3.org/1999/xhtml";
+(:list collection:)
+
+
+fn:collection("http://marklogic.com/xdmp/collections")[10]</query><query name="Query 14: insert document" focus="false" active="true" content-source="as:13424174276106756656:" mode="xquery">xquery version "1.0-ml";
+(:insert json in :)
+let $node := xdmp:unquote('{"username" : "marklogic","password" : "marklogic","roles":[{"rest-admin":"execute"}]}')
+return xdmp:document-insert("/auth/users1.json", $node)</query></workspace></export>

@@ -32,7 +32,7 @@ function createToken(user) {
 }
 
 // insert User
-app.post('/users', supportCrossOriginScript,
+app.post('/users/create', supportCrossOriginScript,
 		function(req, res) {
 			if (!req.body.username || !req.body.password) {
 				return res.status(400).send(
