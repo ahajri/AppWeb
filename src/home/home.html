@@ -45,14 +45,6 @@
 		</div>
 		<div id="contentwrap">
 
-			<!-- 			<div class="form-group" style="width: 200px;"> -->
-			<!-- 				<label>Countries</label> <select class="form-control"> -->
-			<!-- 					<option *ngFor="#country of countryList" [value]="country.cca3"> -->
-			<!-- 						<country-selector [country]="country"></country-selector> -->
-			<!-- 					</option> -->
-			<!-- 				</select> -->
-			<!-- 			</div> -->
-
 			<country-detail [countries]="countryList"></country-detail>
 			<div id="content">
 				<h3 *ngIf="response">{{response}}</h3>

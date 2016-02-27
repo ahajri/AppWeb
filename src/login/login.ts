@@ -19,15 +19,15 @@ let template = require('./login.html');
 export class Login {
 	
   loginForm:any;
-loading:boolean;
-	
+  loading:boolean;
+  errorMsg:string;	
   constructor(public router: Router, public http: Http, public _formBuilder: FormBuilder) {
 	  this.loginForm = this._formBuilder.group({
 	        'username': ['', Validators.required],
 	        'password': ['', Validators.required]
 	    });
 	  this.loading =false;
-	    
+	  this.errorMsg=null;  
   }
 
   login(event, username, password) {
@@ -44,7 +44,8 @@ loading:boolean;
         },
         error => {
           this.loading=false;
-          alert(error.text());
+          this.errorMsg=JSON.stringify(error.text());
+//          alert(error.text());
           console.log(error.text());
         }
       );

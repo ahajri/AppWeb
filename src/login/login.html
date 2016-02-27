@@ -1,5 +1,8 @@
 <div class="login jumbotron center-block">
-	<img alt="MarcLogic" src="/src/images/marklogic.png">
+	<div style="display: inline;">
+		<h2>Login</h2>
+		<img alt="MarcLogic" src="/src/images/marklogic.png" style="float: right;">
+	</div>
 	<form role="form" [ngFormModel]="loginForm"
 		(submit)="login($event, username.value, password.value)">
 		<div class="form-group">
@@ -15,6 +18,10 @@
 			<control-messages control="password"></control-messages>
 		</div>
 		<img src="src/images/loader.gif" *ngIf="loading" />
+<!-- 		<label style="color: red;" *ngIf="errorMsg">{{errorMsg}}</label> -->
+		 <div  class="alert alert-danger" *ngIf="errorMsg">
+          {{errorMsg.message}}
+        </div>
 		<button type="submit" class="btn btn-default">Submit</button>
 		<a href="/signup">Signup</a>
 	</form>

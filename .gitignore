@@ -38,6 +38,6 @@ dist
 public/__build__/**
 .webpack.json
 #project file
-#.project
+.project
 
 build/

@@ -1,5 +1,7 @@
 var express = require('express'), _ = require('lodash'), config = require('./config'), jwt = require('jsonwebtoken');
 
+var userService = require('./service/UserService');
+
 var marklogic = require("marklogic");
 var secConn = require("./config/secConfig.js").connection;
 
@@ -38,22 +40,14 @@ app.post('/users/create', supportCrossOriginScript,
 				return res.status(400).send(
 						"You must send the username and the password");
 			}
-			if (_.find(users, {
-				username : req.body.username
-			})) {
+			if (!!userService.findUser(secDb,req,res,q)) {
 				return res.status(400).send(
 						"A user with that username already exists");
+			}else{
+				userService.saveUser(secDb, req, res)
 			}
 
-			var profile = _.pick(req.body, 'username', 'password', 'extra');
-			profile.id = _.max(users, 'id').id + 1;
-
-			users.push(profile);
-
-			res.status(201).send({
-				id_token : createToken(profile)
-			});
-		});
+});
 
 // Used for login function and creating web session
 app.post('/sessions/create', supportCrossOriginScript, function(req, res) {
@@ -64,31 +58,30 @@ app.post('/sessions/create', supportCrossOriginScript, function(req, res) {
 
 	// get User from database
 	var user = null;// _.find(users, {username: req.body.username});
-	secDb.
-	documents.
-	query(
-			  q.where(
-					  q.value("username", req.body.username),
-					  q.value("username", req.body.password)
-					   
-			  )
-			)
-		.stream()
-			.on("data", function(document) {
-		user=document;
-		console.log(user.length);
-		if(document){
-			return res.status(401).send("The username or password don't match");
-		}else{
-			res.status(201).send({
-				id_token : createToken(user),
-				data:user
-			});
-		}
-	}).on("error", function(error) {
-		console.error(error);
-		return res.status(505).send(error);
-	})
-	
+	secDb.documents.query(
+			q.where(
+					q.or(
+						      q.word("username", req.body.username),
+						      q.word("password", req.body.password)
+						    )
+
+			)).stream().on("data", function(document) {
+				user = document;
+				console.log(user);
+				if (document.content=== {}) {
+					return res.status(401).send(
+							"The username or password don't match");
+				} else {
+					res.status(200).send({
+						id_token : jwt.sign(_.omit(user, 'password'), config.secret, {
+							expiresInMinutes : 60 * 5
+						}),
+						data : user
+					});
+				}
+			}).on("error", function(error) {
+				console.error(error);
+				return res.status(505).send(error);
+			})
 
 });
