@@ -22,7 +22,8 @@ let countries=require('../../backend/countries.json');
 	styles:[styles]
 			})
 export class Home {
-	jwt:string;decodedJwt:string;
+	jwt:string;
+decodedJwt:string;
 response:string;
 api:string;
 countryList:Array<any>;

@@ -18,28 +18,29 @@ let countries=require('../../../backend/countries.json');
 export class CountryDetail {
 
 	@Input() eduProps;
-	
+	jwt:string;
 	response:string;
 	countryList:Array<any>
 	
 	constructor(public countryService:CountryService,public http: Http){
 		this.countryList=countries;
+		this.jwt = localStorage.getItem('jwt')
 	}
 	
 	showEducProperties(countryCode){
 		this.http.get('http://localhost:8020/api/educprop/')
         .subscribe(
-          response => this.addEduProps(response),
+          response => this.addEduProps(response._body),
           error => this.response = error
         );
 		
 	}
 	
 	addEduProps(response){
-			  alert(JSON.parse(response));
 			  this.eduProps=[];
-			  for (  var i = 0; i < JSON.parse(response).length; i++) {
-				  this.eduProps.push(response[i]);
+			  for (  var i = 0; i <JSON.parse(response)[0].content.length; i++) {
+				  console.log(JSON.stringify(JSON.parse(response)[0].content[i]));
+				  this.eduProps.push(JSON.parse(response)[0].content[i]);
 			  }
 		
 	}
