@@ -44,8 +44,16 @@ p {
 	margin: 5px;
 }
 
+.header-list {
+	height: 35px;
+	background: #CEF6D8;
+	border-radius: 10px;
+	border: 1px solid #eb521f;
+	margin: 5px;
+	color: blue;
+}
 #contentwrap {
-	width: 850px;
+	width: 750px;
 	float: left;
 	margin: 0 auto;
 }
@@ -58,13 +66,13 @@ p {
 }
 
 #leftcolumnwrap {
-	width: 150px;
+	width: 250px;
 	float: left;
 	margin: 0 auto;
 }
 
 #leftcolumn {
-	height: 500px;
+	height: 600px;
 	background: #CEF6D8;
 	border-radius: 10px;
 	border: 1px solid #eb521f;

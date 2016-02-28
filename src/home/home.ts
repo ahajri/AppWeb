@@ -3,60 +3,60 @@ import{CORE_DIRECTIVES}from'angular2/common';
 import{Http,Headers}from'angular2/http';
 import{AuthHttp}from'angular2-jwt';
 import{Router}from'angular2/router';
-import {CHART_DIRECTIVES} from 'ng2-charts/ng2-charts';
-import {CountrySelector} from './country-selector';
-import {CountryDetail} from '../common/country/country-detail';
-import {CountryService} from '../service/CountryService';
-
-
-
+import{CHART_DIRECTIVES}from'ng2-charts/ng2-charts';
+import{CountrySelector}from'./country-selector';
+import{CountryDetail}from'../common/country/country-detail';
+import{CountryService}from'../service/CountryService';
 
 let styles=require('./home.css');
 let template=require('./home.html');
-let countries = require('../../backend/countries.json');
+let countries=require('../../backend/countries.json');
 
-@Component({
+@Component
+({
 	selector:'home'
-})
+		})
 @View({
 	directives:[CORE_DIRECTIVES,CountrySelector,CountryDetail],
 	template:template,
 	styles:[styles]
-})
+			})
 export class Home {
-	jwt:string;
-	decodedJwt:string;
-	response:string;
-	api:string;
-	countryList:Array<any>;
+	jwt:string;decodedJwt:string;
+response:string;
+api:string;
+countryList:Array<any>;
+eduProps:Array<any>;
+loading:boolean;
 
-
-	constructor(public countryService:CountryService,public router: Router, public http: Http, public authHttp: AuthHttp) {
+constructor(public countryService:CountryService,public router: Router, public http: Http, public authHttp: AuthHttp) {
     this.jwt = localStorage.getItem('jwt');
     this.decodedJwt = this.jwt && window.jwt_decode(this.jwt);
     this.countryList = countries;
-   
-//    this.bbb = JSON.stringify(countries);
-//    alert(countries[0].cca3);
-    
-//    this.http.get('http://localhost:8020/api/countries')
-//    .subscribe(
-//      response => {
-//        localStorage.setItem('bbb', response.json());
-//        this.router.parent.navigateByUrl('/home');
-//      },
-//      error => {
-//        alert(error.text());
-//        console.log(error.text());
-//      }
-//    );
+    this.loading=false;
+    this.eduProps=[];
+
   }
 
-  searchCountry(cca3){
-	  this._callApi('Anonymous', 'http://localhost:8020/api/search-countries/'+cca3);
+  searchCountry(name){
+	  this.http.get('http://localhost:8020/api/search-countries/'+name)
+      .subscribe(
+        response =>  this.mapRes(response._body) ,
+        error => this.response = JSON.parse(error._body)
+      )
   }
 
-  logout() {
+  mapRes(response){
+	  console.log(JSON.parse(response));
+	  this.countryList=[];
+	  for (  var i = 0; i < JSON.parse(response).length; i++) {
+		  this.countryList.push(response[i]);
+		  console.log(JSON.parse(response)[i]);
+	  }
+	  
+  }
+
+logout() {
     localStorage.removeItem('jwt');
     this.router.parent.navigateByUrl('/login');
   }
@@ -68,28 +68,43 @@ export class Home {
 	callSecuredApi() {
     this._callApi('Secured', 'http://localhost:8020/api/protected/random-quote');
   }
-	manageProfile(){
+
+	graph(){
 		this._callApi('Anonymous', 'http://localhost:8020/api/manage-profile');
 	}
-
+	
+	csv2jsonAndSaveInML(){
+		this.loading=true;
+		this.http.get('http://localhost:8020/api/csv2json')
+        .subscribe(
+          response => this.loading=false,//this.endConversion(),
+          error => this.response = error.text()
+        );
+	}
+	
+	startLoading(){
+		this.loading=false;
+		this.response ="XLS converted and inserted in datbase"
+	}
 	_callApi(type, url) {
-    this.response = null;
-    if (type === 'Anonymous') {
-      // For non-protected routes, just use Http
-      this.http.get(url)
-        .subscribe(
-          response => this.response = response.text(),
-          error => this.response = error.text()
-        );
-    }
-    if (type === 'Secured') {
-      // For protected routes, use AuthHttp
-      this.authHttp.get(url)
-        .subscribe(
-          response => this.response = response.text(),
-          error => this.response = error.text()
-        );
-    }
+	    this.response = null;
+	    if (type === 'Anonymous') {
+	      // For non-protected routes, just use Http
+	      this.http.get(url)
+	        .subscribe(
+	          response => this.response = response.text(),
+	          error => this.response = error.text()
+	        );
+	    }
+	    if (type === 'Secured') {
+	      // For protected routes, use AuthHttp
+	      this.authHttp.get(url)
+	        .subscribe(
+	          response => this.response = response.text(),
+	          error => this.response = error.text()
+	        );
+	    }
   }
+	
 	
 }

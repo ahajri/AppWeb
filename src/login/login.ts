@@ -37,16 +37,13 @@ export class Login {
     this.http.post('http://localhost:8020/sessions/create', body, { headers: contentHeaders })
       .subscribe(
         response => {
-          console.log(response.json());
           this.loading=false;
           localStorage.setItem('jwt', response.json().id_token);
           this.router.parent.navigateByUrl('/home');
         },
         error => {
           this.loading=false;
-          this.errorMsg=JSON.stringify(error.text());
-//          alert(error.text());
-          console.log(error.text());
+          this.errorMsg=JSON.stringify(error._body);
         }
       );
   }

@@ -1,0 +1,139 @@
+<export><workspace name="InvestWorkspace"><query name="Query 1: get document" focus="false" active="true" content-source="as:1291195471016053097:" mode="xquery">(:  __________________________________________________________
+ ::  (Q1.1)
+ ::  determine document collections
+ :: __________________________________________________________
+  :)
+ 
+ 
+xdmp:document-get-collections("D:/IDE/MLGeoAdvert/DATA/REF/books.xml")
+</query><query name="Query 4: list files in directory" focus="false" active="true" content-source="as:12016072497605765337:" mode="xquery">(:  __________________________________________________________
+ ::  (Q1.1)
+ ::  List documents in directory
+ :: __________________________________________________________
+  :)
+
+for $x in xdmp:directory("/auth/", "1")
+return
+fn:document-uri($x)</query><query name="Query 5: list documents" focus="false" active="true" content-source="as:12016072497605765337:" mode="xquery">xquery version "1.0-ml";
+declare namespace html = "http://www.w3.org/1999/xhtml";
+(:  __________________________________________________________
+ ::  (Q1.1)
+ ::  delete document
+ :: __________________________________________________________
+  :)
+
+for $x in xdmp:directory("/auth/", "1")
+let $doc := fn:document-uri($x)
+return $doc
+(:xdmp:document-delete():)
+
+</query><query name="Query 6: delete directory" focus="true" active="true" content-source="as:12016072497605765337:" mode="xquery">xquery version "1.0-ml";
+declare namespace html = "http://www.w3.org/1999/xhtml";
+(:  __________________________________________________________
+ ::  (Q1.4)
+ ::  remove directory
+ :: __________________________________________________________
+  :)
+xdmp:directory-delete("/properties/")</query><query name="Query 7: load Graph" focus="false" active="true" content-source="as:12016072497605765337:" mode="xquery">xquery version "1.0-ml"; 
+ 
+import module namespace sem = "http://marklogic.com/semantics" 
+      at "/MarkLogic/semantics.xqy";
+	  
+sem:rdf-load(
+    'D:/DEV/MarkLogic/CommonData/import/stat/ttl/persondata_en.ttl',
+    ("person", "graph=http://marklogic.com/semantics/sb/person/"),
+    (),
+    xdmp:permission("rest-extension-user", "execute")
+    )</query><query name="Query 8: Load File" focus="false" active="true" content-source="as:12016072497605765337:" mode="xquery">xquery version "1.0-ml";
+declare namespace html = "http://www.w3.org/1999/xhtml";
+(: Load document in database :)
+
+xdmp:document-load("C:\IDE\LunaW32\WorkSpace\TechChallenge\data\CommonData\import\json\countries.json", 
+                    &lt;options xmlns="xdmp:document-load"&gt;
+                      &lt;uri&gt;/json/countries.json&lt;/uri&gt; 
+                      &lt;permissions&gt;{xdmp:default-permissions()}&lt;/permissions&gt; 
+                      &lt;collections&gt;
+                        &lt;collection&gt;AuthCollection&lt;/collection&gt;
+                      &lt;/collections&gt; 
+                      &lt;format&gt;json&lt;/format&gt;
+                      &lt;encoding&gt;UTF-8&lt;/encoding&gt;
+                    &lt;/options&gt;)</query><query name="Query 9: Convert XLS to XHTML" focus="false" active="true" content-source="as:12016072497605765337:" mode="xquery">xquery version "1.0-ml";
+declare namespace html = "http://www.w3.org/1999/xhtml";
+import module namespace excel = "http://marklogic.com/cpf/excel" at "/MarkLogic/conversion/excel.xqy";
+(:Convert XLS File:)
+ xdmp:excel-convert(xdmp:document-get("D:/DEV/MarkLogic/CommonData/import/xls/education.xls"),
+                         "education_properties.xhtml",
+                         &lt;options xmlns="xdmp:excel-convert"
+                               xmlns:tidy="xdmp:tidy"&gt;
+                          &lt;tidy&gt;true&lt;/tidy&gt;
+                          &lt;tidy:clean&gt;yes&lt;/tidy:clean&gt;
+                          &lt;sheetID&gt;3&lt;/sheetID&gt;
+                        &lt;/options&gt; )
+  </query><query name="Query 10: check user exist" focus="false" active="true" content-source="as:18377008459498027332:" mode="xquery">xquery version "1.0-ml"; 
+
+import module namespace sec = "http://marklogic.com/xdmp/security" 
+      at "/MarkLogic/security.xqy";
+
+sec:user-exists("ahajri")</query><query name="Query 11: Query trilpe" focus="false" active="true" content-source="as:13424174276106756656:" mode="sparql">PREFIX db: &lt;http://dbpedia.org/resource/&gt;
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX onto: &lt;http://dbpedia.org/ontology/&gt;
+
+#SELECT *
+#WHERE { ?person onto:birthPlace db:Manouba } 
+
+
+
+
+SELECT ?person ?name
+  WHERE { ?person onto:birthPlace db:Paris;
+    foaf:name ?name .}</query><query name="Query 12: load tripe from xml" focus="false" active="true" content-source="as:13424174276106756656:" mode="xquery">xquery version "1.0-ml"; 
+ 
+import module namespace sem = "http://marklogic.com/semantics" 
+      at "/MarkLogic/semantics.xqy";
+declare namespace rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+declare namespace dc = "http://purl.org/dc/elements/1.1/";
+declare namespace v="http://www.w3.org/2006/vcard/";
+
+sem:rdf-load('C:/IDE/LunaW32/WorkSpace/TechChallenge/data/CommonData/import/stat/poverty_countries.xml', "rdfxml")
+(:Next = electric_consumption_power.xml:)</query><query name="Query 13: read rdf" focus="false" active="true" content-source="as:9118966181948025383:" mode="xquery">xquery version "1.0-ml"; 
+ 
+import module namespace sem = "http://marklogic.com/semantics" 
+      at "/MarkLogic/semantics.xqy";
+ 
+sem:rdf-get('/triplestore/e31181b944965390.xml', "rdfjson");</query><query name="Query 14: Insert Triples" focus="false" active="true" content-source="as:13424174276106756656:" mode="xquery">xquery version "1.0-ml"; 
+ import module namespace sem = "http://marklogic.com/semantics" 
+      at "/MarkLogic/semantics.xqy";
+
+
+   
+
+sem:rdf-insert(sem:triple(sem:iri("http://example.com/ns/USA"),
+	sem:iri("http://example.com/ns/AG.LND.AGRI.KZ"), 48.86024177))</query><query name="Query 15:search" focus="false" active="true" content-source="as:12016072497605765337:" mode="xquery">xquery version "1.0-ml";
+
+import module namespace search = 
+  "http://marklogic.com/appservices/search"
+  at "/MarkLogic/appservices/search/search.xqy";
+
+search:search("ahajri")</query><query name="Query 16: Search default Options" focus="false" active="true" content-source="as:12016072497605765337:" mode="xquery">xquery version "1.0-ml";
+import module namespace search = "http://marklogic.com/appservices/search"
+    at "/MarkLogic/appservices/search/search.xqy";
+
+search:get-default-options()
+</query><query name="Query 17: delete all docuemtns in DB" focus="false" active="true" content-source="as:1291195471016053097:" mode="xquery">xquery version "1.0-ml";
+declare namespace html = "http://www.w3.org/1999/xhtml";
+(:delete all doc in database:)
+
+for $doc in doc() return xdmp:document-delete(xdmp:node-uri($doc))</query><query name="Query 18:transform and load xls file" focus="false" active="true" content-source="as:12016072497605765337:" mode="xquery">xquery version "1.0-ml";
+declare namespace html = "http://www.w3.org/1999/xhtml";
+import module namespace excel = "http://marklogic.com/cpf/excel" at "/MarkLogic/conversion/excel.xqy";
+import module namespace ooxml="http://marklogic.com/openxml"     at "/MarkLogic/openxml/package.xqy";
+(:Load XLS File:)
+ xdmp:excel-convert(xdmp:document-get("D:/DEV/MarkLogic/CommonData/import/xls/education.xls"),
+                         "education_properties.xls",
+                         &lt;options xmlns="xdmp:excel-convert"
+                               xmlns:tidy="xdmp:tidy"&gt;
+                          &lt;tidy&gt;true&lt;/tidy&gt;
+                          &lt;tidy:clean&gt;yes&lt;/tidy:clean&gt;
+                          &lt;sheetID&gt;3&lt;/sheetID&gt;
+                        &lt;/options&gt; )
+  </query></workspace></export>

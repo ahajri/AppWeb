@@ -1,36 +1,38 @@
-<div style="height: 200px;overflow: scroll;">
+<div style="height: 200px; overflow: scroll;">
 	<table id="example" class="display" cellspacing="0" width="100%">
-		<thead>
+		<thead class="header-list">
 			<tr>
-				<th width="15%">Name</th>
+				<th width="40%">Name</th>
 				<th>Region</th>
-				<th>Sub-Region</th>
-				<th>Area</th>
-				<th>Currency</th>
-				<th>Economy Details</th>
+				<th width="10%">Currency</th>
+				<th width="15%">Eco. Growth</th>
+				<th width="15%">Education</th>
 			</tr>
 		</thead>
-		<tfoot>
+		<tfoot class="header-list">
 			<tr>
-				<th>Name</th>
+				<th width="40%">Name</th>
 				<th>Region</th>
-				<th>Sub-Region</th>
-				<th>Area</th>
-				<th>Currency</th>
-				<th>Economy Details</th>
+				<th width="10%">Currency</th>
+				<th width="15%">Eco. Growth</th>
+				<th width="15%">Education</th>
 			</tr>
 		</tfoot>
 		<tbody>
-			<tr *ngFor="#country of countries">
+			<tr *ngFor="#country of countryList ">
 				<td>{{country.name.common}}</td>
 				<td>{{country.region}}</td>
-				<td>{{country.subregion}}</td>
-				<td>{{country.area}}</td>
 				<td>{{country.currency[0]}}</td>
-				<td><img src="src/images/stat.png" /></td>
+				<td style="text-align: center;"><img src="src/images/stat.png"
+					style="cursor: pointer;"
+					title="show properties" /></td>
+				<td style="text-align: center;"><img
+					src="src/images/education.png" style="cursor: pointer;"
+					(click)="showEducProperties(country.cca3)"
+					title="show properties" /></td>
 			</tr>
 
 		</tbody>
 	</table>
-	
+
 </div>
