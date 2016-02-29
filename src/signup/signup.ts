@@ -20,19 +20,24 @@ export class Signup {
 
   signup(event, username, password) {
     event.preventDefault();
-    this.isLoading=true;
+    this.isLoading = true;
     let body = JSON.stringify({ username, password });
     this.http.post('http://localhost:8020/users/create', body, { headers: contentHeaders })
       .subscribe(
         response => {
-          this.isLoading=false;
-          localStorage.setItem('jwt', response.json().id_token);
-          this.router.parent.navigateByUrl('/home');
+          this.isLoading = false;
+          if(response.json().id_token){
+        	  localStorage.setItem('jwt', response.json().id_token);
+              this.router.parent.navigateByUrl('/login');
+          }else{
+        	  this.response=response.text();
+          }
+          
         },
         error => {
-          this.isLoading=false;
+          this.isLoading = false;
+          this.response=error.text();
           console.log(error.text());
-          this.router.parent.navigateByUrl('/login');
         }
       );
   }

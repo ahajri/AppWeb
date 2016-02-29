@@ -1,4 +1,4 @@
-import{Component,Input,View} from'angular2/core';
+import{Component,Input,Output,View,EventEmitter} from'angular2/core';
 import{CountryService} from'../../service/CountryService';
 import{CORE_DIRECTIVES} from'angular2/common';
 import{Http,Headers} from'angular2/http';
@@ -10,38 +10,38 @@ let template=require('./country-detail.html');
 let styles=require('./country-detail.css');
 let countries=require('../../../backend/countries.json');
 
-@Component
-({
+@Component({
 	selector:'country-detail',
 	template:template
-	})
+})
 export class CountryDetail {
 
-	@Input() eduProps;
 	jwt:string;
 	response:string;
-	countryList:Array<any>
+	countryList:Array<any>;
+	props:Array<any>;
+	
+	@Output() eduProps=new EventEmitter();
 	
 	constructor(public countryService:CountryService,public http: Http){
 		this.countryList=countries;
-		this.jwt = localStorage.getItem('jwt')
+		this.jwt = localStorage.getItem('jwt');
+		this.props = [];
 	}
 	
-	showEducProperties(countryCode){
+	listEducProps(){
 		this.http.get('http://localhost:8020/api/educprop/')
         .subscribe(
           response => this.addEduProps(response._body),
           error => this.response = error
         );
-		
 	}
 	
 	addEduProps(response){
-			  this.eduProps=[];
-			  for (  var i = 0; i <JSON.parse(response)[0].content.length; i++) {
-				  console.log(JSON.stringify(JSON.parse(response)[0].content[i]));
-				  this.eduProps.push(JSON.parse(response)[0].content[i]);
-			  }
-		
+		this.props=[];
+	    for (  var i = 0; i <JSON.parse(response)[0].content.length; i++) {
+		  this.props.push(JSON.parse(response)[0].content[i]);
+	    }
+	    this.eduProps.emit(this.props);
 	}
 }

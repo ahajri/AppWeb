@@ -22,7 +22,7 @@ let countries=require('../../backend/countries.json');
 	styles:[styles]
 			})
 export class Home {
-	jwt:string;
+jwt:string;
 decodedJwt:string;
 response:string;
 api:string;
@@ -57,7 +57,7 @@ constructor(public countryService:CountryService,public router: Router, public h
 	  
   }
 
-logout() {
+  logout() {
     localStorage.removeItem('jwt');
     this.router.parent.navigateByUrl('/login');
   }
@@ -72,6 +72,15 @@ logout() {
 
 	graph(){
 		this._callApi('Anonymous', 'http://localhost:8020/api/manage-profile');
+	}
+	
+	updateEduProps(event){
+		this.eduProps=[];
+		console.log(event.length);
+		this.eduProps.push.apply(this.eduProps,event);
+//		for (var i = 1;  < event.length; i++) {
+//			this.eduProps.concat(event);
+//		}
 	}
 	
 	csv2jsonAndSaveInML(){

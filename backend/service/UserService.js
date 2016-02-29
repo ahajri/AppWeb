@@ -20,17 +20,17 @@ exports.saveUser = function(db, req, res) {
 			res.status(500).send(error);
 		} else {
 			var profile = _.pick(req.body, 'username', 'password', 'extra');
-			createToken(profile);
 			res.status(201).send({
-				id_token : jwt.sign(_.omit(user, 'password'), config.secret, {
+				id_token : jwt.sign(_.omit(profile, 'password'), config.secret, {
 					expiresInMinutes : 60 * 5
-				})
+				}),
+				data:response
 			});
 		}
 	});
 }
 
-exports.createToken = function(user) {
+createToken = function(user) {
 	return jwt.sign(_.omit(user, 'password'), config.secret, {
 		expiresInMinutes : 60 * 5
 	});

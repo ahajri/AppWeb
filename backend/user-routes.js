@@ -29,19 +29,33 @@ function createToken(user) {
 }
 
 // insert User
-app.post('/users/create', supportCrossOriginScript,
-		function(req, res) {
-			if (!req.body.username || !req.body.password) {
-				return res.status(400).send(
-						"You must send the username and the password");
-			}
-			if (!!userService.findUser(secDb, req, res, q)) {
-				return res.status(400).send(
-						"A user with that username already exists");
-			} else {
-				userService.saveUser(secDb, req, res)
-			}
-		});
+app.post('/users/create', supportCrossOriginScript, function(req, res) {
+	if (!req.body.username || !req.body.password) {
+		return res.status(400).send(
+				"You must send the username and the password");
+	}
+	secDb.documents.query(
+			q.where(q.collection("AuthCollection"), q.value("username",
+					req.body.username)
+
+			)).result(function(documents) {
+				var size = documents.length;
+				if (size === 1) {
+					console.log("Username already tocken");
+					res.status(500).send("Username already tocken");
+				} else {
+					userService.saveUser(secDb, req, res)
+				}
+
+	}, function(error) {
+		console.log(error);
+		res.status(500).send(error);
+	});
+});
+		
+				
+			
+
 
 // Used for login function and creating web session
 app.post('/sessions/create', supportCrossOriginScript, function(req, res) {
