@@ -29,6 +29,7 @@ api:string;
 countryList:Array<any>;
 eduProps:Array<any>;
 loading:boolean;
+selected:string;
 
 constructor(public countryService:CountryService,public router: Router, public http: Http, public authHttp: AuthHttp) {
     this.jwt = localStorage.getItem('jwt');
@@ -76,13 +77,12 @@ constructor(public countryService:CountryService,public router: Router, public h
 	
 	updateEduProps(event){
 		this.eduProps=[];
-		console.log(event.length);
 		this.eduProps.push.apply(this.eduProps,event);
-//		for (var i = 1;  < event.length; i++) {
-//			this.eduProps.concat(event);
-//		}
+
 	}
-	
+	getSelected(event){
+		console.log(event)
+	}
 	csv2jsonAndSaveInML(){
 		this.loading=true;
 		this.http.get('http://localhost:8020/api/csv2json')

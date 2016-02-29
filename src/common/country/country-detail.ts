@@ -21,7 +21,9 @@ export class CountryDetail {
 	countryList:Array<any>;
 	props:Array<any>;
 	
+	
 	@Output() eduProps=new EventEmitter();
+	@Output() selectedCountry=new EventEmitter();
 	
 	constructor(public countryService:CountryService,public http: Http){
 		this.countryList=countries;
@@ -29,19 +31,21 @@ export class CountryDetail {
 		this.props = [];
 	}
 	
-	listEducProps(){
+	listEducProps(selected){
 		this.http.get('http://localhost:8020/api/educprop/')
         .subscribe(
-          response => this.addEduProps(response._body),
+          response => this.addEduProps(response._body,selected),
           error => this.response = error
         );
 	}
 	
-	addEduProps(response){
+	addEduProps(response,selected){
+
 		this.props=[];
 	    for (  var i = 0; i <JSON.parse(response)[0].content.length; i++) {
 		  this.props.push(JSON.parse(response)[0].content[i]);
 	    }
 	    this.eduProps.emit(this.props);
+	    this.selectedCountry.emit(selected);
 	}
 }

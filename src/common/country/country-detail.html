@@ -5,7 +5,6 @@
 				<th width="30%">Name</th>
 				<th width="30%">Region</th>
 				<th width="20%">Currency</th>
-<!-- 				<th width="15%">Eco. Growth</th> -->
 				<th width="20%">Education</th>
 			</tr>
 		</thead>
@@ -14,7 +13,6 @@
 				<th width="30%">Name</th>
 				<th width="30%">Region</th>
 				<th width="20%">Currency</th>
-<!-- 				<th width="15%">Eco. Growth</th> -->
 				<th width="20%">Education</th>
 			</tr>
 		</tfoot>
@@ -23,16 +21,11 @@
 				<td>{{country.name.common}}</td>
 				<td>{{country.region}}</td>
 				<td>{{country.currency[0]}}</td>
-<!-- 				<td style="text-align: center;"><img src="src/images/stat.png" -->
-<!-- 					style="cursor: pointer;" -->
-<!-- 					title="show properties" /></td> -->
 				<td style="text-align: center;"><img
-					src="src/images/education.png" style="cursor: pointer;"
-					(click)="listEducProps()"
+					src="src/images/stat.png" style="cursor: pointer;"
+					(click)="listEducProps(country.cca3)"
 					title="show properties" /></td>
 			</tr>
-
 		</tbody>
 	</table>
-
 </div>

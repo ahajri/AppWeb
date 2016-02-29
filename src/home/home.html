@@ -31,7 +31,7 @@
 
 					</select>
 					<div align="center">
-						<input id="submitGraph" type="submit" value="   Graph   "
+						<input id="submitGraph" type="submit" value="   Graph   " title="display chart"
 							width="100px" (click)="graph()" />
 					</div>
 					<br />
@@ -42,27 +42,16 @@
 					</div>
 					<img src="src/images/loader.gif" *ngIf="loading" />
 				</div>
-			
-
-
 			</div>
 		</div>
 		<div id="contentwrap">
 
-			<country-detail  (eduProps)="updateEduProps($event)"></country-detail>
+			<country-detail  (eduProps)="updateEduProps($event)" (selected)="getSelected($event)"></country-detail>
 			<div id="content">
 				<label *ngIf="response" style="color: red;">{{response}}</label>
 			</div>
-			<div id="content">
-				<div class="row">
-					<div class="col-md-6">
-						
-					</div>
-					<div class="col-md-6" style="margin-bottom: 10px;">
-						
-						
-					</div>
-				</div>
+			<div >
+				
 			</div>
 		</div>
 		<div id="footerwrap">
