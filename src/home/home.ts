@@ -30,6 +30,7 @@ countryList:Array<any>;
 eduProps:Array<any>;
 loading:boolean;
 selected:string;
+chart:string;
 
 constructor(public countryService:CountryService,public router: Router, public http: Http, public authHttp: AuthHttp) {
     this.jwt = localStorage.getItem('jwt');
@@ -71,6 +72,14 @@ constructor(public countryService:CountryService,public router: Router, public h
     this._callApi('Secured', 'http://localhost:8020/api/protected/random-quote');
   }
 
+	listPersons(country){
+		this.http.get('http://localhost:8020/persons/'+country)
+        .subscribe(
+          response => this.chart = response.text(),
+          error => this.chart = error.text()
+        )
+	}
+	
 	graph(){
 		this._callApi('Anonymous', 'http://localhost:8020/api/manage-profile');
 	}

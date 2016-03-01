@@ -12,12 +12,12 @@
 
 		</div>
 		<div id="navigationwrap">
-			<div id="navigation" style="padding-left: 5px; padding-top: 3px;"
-				#countryNameSearch>
-				<input id="search" #search type="text" width="20%"
-					placeholder="Enter country name" /> <input id="submit"
-					type="submit" value="Go" (click)="searchCountry(search.value)" />
-			</div>
+<!-- 			<div id="navigation" style="padding-left: 5px; padding-top: 3px;" -->
+<!-- 				#countryNameSearch> -->
+<!-- 				<input id="search" #search type="text" width="20%" -->
+<!-- 					placeholder="Enter country name" /> <input id="submit" -->
+<!-- 					type="submit" value="Go" (click)="searchCountry(search.value)" /> -->
+<!-- 			</div> -->
 
 
 		</div>
@@ -27,7 +27,7 @@
 					<label>Properties</label> <select multiple id="ecoPropList"
 						title="Eco. properties"
 						style="width: 100%; height: 80%; overflow: scroll;">
-						<option *ngFor="#prop of eduProps" title="{{prop.INDICATOR_CODE}}">{{prop.INDICATOR_NAME}}</option>
+						<option *ngFor="#prop of eduProps" title="{{prop.INDICATOR_CODE}}" (click)="showChart(prop.INDICATOR_CODE)">{{prop.INDICATOR_NAME}}</option>
 
 					</select>
 					<div align="center">
@@ -51,7 +51,7 @@
 				<label *ngIf="response" style="color: red;">{{response}}</label>
 			</div>
 			<div >
-				
+				<label *ngIf="chart" >{{chart}}</label>
 			</div>
 		</div>
 		<div id="footerwrap">

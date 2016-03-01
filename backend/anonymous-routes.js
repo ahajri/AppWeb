@@ -40,12 +40,12 @@ app.get('/api/csv2json', supportCrossOriginScript, function(req, res) {
 		var converter = new Converter({});
 
 		// end_parsed will be emitted once parsing finished
-		
-		converter.fromFile(csvFileName,function(err,result){
-			if(err){
+
+		converter.fromFile(csvFileName, function(err, result) {
+			if (err) {
 				callback(err);
 			}
-			if(result){
+			if (result) {
 				convertedJson = JSON.stringify(result);
 				callback();
 			}
@@ -81,7 +81,6 @@ app.get('/api/csv2json', supportCrossOriginScript, function(req, res) {
 
 });
 
-
 app.get('/api/search-countries/:cca3', supportCrossOriginScript, function(req,
 		res) {
 	var found = [];
@@ -99,16 +98,49 @@ app.get('/api/search-countries/:cca3', supportCrossOriginScript, function(req,
 	res.status(200).send(found);
 });
 
-app.get('/api/educprop/',supportCrossOriginScript, function(req,res) {
-	db.documents.query(
-		    qb.where(qb.parsedFrom('SE.ENR.PRIM.FM.ZS'))
-		).result( function(results) {
-		  return res.status(200).send(results);
-		});
-	
+app.get('/api/educprop/', supportCrossOriginScript, function(req, res) {
+	db.documents.query(qb.where(qb.parsedFrom('SE.ENR.PRIM.FM.ZS'))
+
+	).result(function(results) {
+		return res.status(200).send(results);
+	});
+
 })
 
+app.get('/api/persons/:country', supportCrossOriginScript,
+		function(req, res) {
+			var country = req.params.country;
+			var SparqlClient = require('sparql-client');
+			var util = require('util');
+			var endpoint = 'http://localhost:8008/v1/graphs/sparql';
 
+			// Get the leaderName(s) of the given citys
+			// if you do not bind any city, it returns 10 random leaderNames
+			var query = "PREFIX dbb: <http://dbpedia.org/resource/> "
+					+ "PREFIX foaf: <http://xmlns.com/foaf/0.1/> "
+					+ "PREFIX onto: <http://dbpedia.org/ontology/> " +
+					"SELECT * "
+					+ "WHERE { ?person onto:birthPlace dbb:France } "
+					+ "SELECT * WHERE { ?person onto:birthPlace dbb:" + country
+					+ " } ";
+			var client = new SparqlClient(endpoint);
+			console.log("Query to " + endpoint);
+			console.log("Query: " + query);
+			client.query(query)
+			// .bind('city', 'db:Chicago')
+			// .bind('city', 'db:Tokyo')
+			// .bind('city', 'db:Casablanca')
+			.bind('birthPlace', '<http://dbpedia.org/resource/France>')
+					.execute(function(error, results) {
+						if (error) {
+							return res.status(500).send(error);
+						} else {
+							return res.status(200).send(results);
+						}
+
+					});
+
+		})
 
 app.get('/api/find-profile', supportCrossOriginScript, function(req, res) {
 	res.status(200).send(JSON.stringify(personService.getRandomOne()));

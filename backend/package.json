@@ -30,6 +30,9 @@
     "lodash": "^2.4.1",
     "marklogic": "^1.0.4",
     "morgan": "^1.2.3",
-    "xls-to-json": "^0.3.2"
+    "sparql-client": "^0.2.0",
+    "util": "^0.10.3",
+    "xls-to-json": "^0.3.2",
+    "xml2js": "^0.4.16"
   }
 }
